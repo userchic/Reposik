@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "FormsApp/1.0.0": {
+        "dependencies": {
+          "PointLib": "1.0.0"
+        },
+        "runtime": {
+          "FormsApp.dll": {}
+        }
+      },
+      "PointLib/1.0.0": {
+        "runtime": {
+          "PointLib.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FormsApp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PointLib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
