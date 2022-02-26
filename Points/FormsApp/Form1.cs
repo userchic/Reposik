@@ -4,12 +4,14 @@ using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.SOAP;
+using System.Runtime.Serialization.Formatters.Soap;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PointLib;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace FormsApp
 {
@@ -64,6 +66,18 @@ namespace FormsApp
                         var sf = new SoapFormatter();
                         sf.Serialize(fs, points);
                         break;
+                    case ".xml":
+                        XmlRootAttribute rt = new XmlRootAttribute("Points");
+                        XmlAttributeOverrides overrides = new XmlAttributeOverrides();
+                        var xf = new XmlSerializer(typeof(Point[]), overrides, new[] { typeof(Point3D) }, rt, "Points");
+                        xf.Serialize(fs, points);
+                        break;
+                    case ".json":
+                        var jf = new JsonSerializer();
+                        jf.TypeNameHandling = TypeNameHandling.All;
+                        using (var w = new StreamWriter(fs))
+                            jf.Serialize(w, points);
+                        break;
                 }
             }
         }
@@ -77,7 +91,7 @@ namespace FormsApp
                 return;
 
             using (var fs =
-                new FileStream(dlg.FileName, FileMode.Open, FileAccess.Read))
+                new FileStream(dlg.FileName, FileMode.OpenOrCreate))
             {
                 switch (Path.GetExtension(dlg.FileName))
                 {
@@ -88,6 +102,19 @@ namespace FormsApp
                     case ".soap":
                         var sf = new SoapFormatter();
                         points = (Point[])sf.Deserialize(fs);
+                        break;
+                    case ".xml":
+                        XmlRootAttribute rt = new XmlRootAttribute("Points");
+                        XmlAttributeOverrides overrides = new XmlAttributeOverrides();
+                        var xf = new XmlSerializer(typeof(Point[]),overrides, new[] { typeof(Point3D) },rt, "Points");
+                        points = xf.Deserialize(fs) as Point[];
+
+                        break;
+                    case ".json":
+                        var jf = new JsonSerializer();
+                        jf.TypeNameHandling = TypeNameHandling.All;
+                        using (var r = new StreamReader(fs))
+                            points = (Point[])jf.Deserialize(r, typeof(Point[]));
                         break;
                 }
             }
