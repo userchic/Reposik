@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<описания-книг>
+  <title-info>
+    <genre match="90">sf_fantasy</genre>
+    <author>
+      <first-name>Джон</first-name>
+      <middle-name>Рональд Руэл</middle-name>
+      <last-name>Толкин</last-name>
+    </author>
+    <book-title>Возвращение Короля</book-title>
+    <lang>ru</lang>
+    <sequence name="Властелин Колец" number="3" />
+  </title-info>
+</описания-книг>
